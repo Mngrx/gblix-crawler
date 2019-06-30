@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->everyMinute();
 
-        $schedule->command('api:crawl')->hourly();
+        $schedule->command('api:crawl')->cron('* */2 * * *');
 
     }
 
