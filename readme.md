@@ -1,72 +1,93 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Avaliação de seleção para vaga de desenvolvedor PHP na Gblix
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Para executar o projeto
 
-## About Laravel
+Será necessário ter os seguintes requisitos:
+* PHP >= 7.1.3
+* BCMath PHP Extension
+* Ctype PHP Extension
+* JSON PHP Extension
+* Mbstring PHP Extension
+* OpenSSL PHP Extension
+* PDO PHP Extension
+* Tokenizer PHP Extension
+* XML PHP Extension
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Além do uso do 'composer' para instalar as dependências.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Abra o arquivo '.env' na pasta raiz do projeto e preencha os campos que estão vazios com informações sobre seu servidor mysql/mariadb. Se assegure de ter uma base da dados (database) chamada 'crawler' (pode alterar caso seja necessário).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Após isso, execute os seguintes comandos, na pasta raiz do projeto.
 
-## Learning Laravel
+```
+$ composer install
+$ php artisan migrate
+$ php artisan serve
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1400 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+E o sistema estará rodando.
 
-## Laravel Sponsors
+### Alguns comando imporantes
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* Para preencher o banco com informações fictícias
+```
+$ php artisan db:seed
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
+* Para preencher o banco com informações advindas da API do Studio Ghibli
+```
+$ php artisan api:crawl
+```
 
-## Contributing
+* Para executar o teste unitário que foi configurado
+```
+$ ./vendor/bin/phpunit
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Exemplos de requisições
 
-## Security Vulnerabilities
+Com a aplicação executando, pode-se fazer algumas requisições, abaixo segue alguns exemplos:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* GET /pessoas
+* GET /pessoas?fmt=csv
+* GET /pessoas?fmt=naoexiste
+* GET /pessoas?fmt=html&order=nome_personagem&sort=asc
+* GET /pessoas?order=pontuacao_filme&sort=asc&titulo_filme=2002&nome_personagem=Yuki
+* GET /pessoas?order=ano_lancamento&sort=desc&pontuacao_filme=95,89
 
-## License
+### Os parâmetros para rota pessoas
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* fmt - formato do retorno (json, csv, html) - o padrão é json
+* order - a coluna que deve ser ordenada
+* sort - a sequência da ordenação (asc ou desc) - o padrão é asc
+* nome_personagem - filtro para nome de personagem
+* idade_personagem - filtro para idade de personagem
+* titulo_filme - filtro para título de filme
+* ano_lancamento - filtro para ano de lançamento
+* pontuacao_filme - filtro para pontuação de filme
+
+Obs: pode-se passar mais de um valor para ser pesquisado nos campos de filtro se separar cada valor por ','.
+
+## Configurando o scheduling
+
+Caso tenha o serviço de cron na sua máquina, é possível executar as schedules do Laravel de acordo com a programaçao delas. Os seguintes comandos, sendo executado na pasta raiz do projeto, irão programar o cron.
+
+```
+# echo "* * * * * ${USER} cd $(pwd) && php artisan schedule:run >> /dev/null 2>&1" >> /etc/crontab  
+# systemctl restart cron.service 
+```
+
+Obs: Caso queira executar o comando cron com um usuário diferente de 'root', altere '${USER}' pelo usuário desejado. No meu caso, ficou:
+
+```
+# echo "* * * * * igor cd $(pwd) && php artisan schedule:run >> /dev/null 2>&1" >> /etc/crontab  
+```
+
+## Informações importantes
+
+Estou usando o id retornado pela API para as relações, por ficar melhor de usar os dados que ela fornece e usar as relações já pré-estabelecidas. Porém, também dei id autoincremental para as tabelas por questão de "possibilidades futuras" e contabilidade.
+
+Retirados os códigos de models, controllers e views que foram autogerados na criação do projeto laravel para deixar o código mais enxuto.
+
+Utilizando 'Laracsv' para gerar csv e 'Guzzle' para requisições HTTP.
