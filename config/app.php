@@ -175,6 +175,21 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Api Crawl Service Provider
+         */
+
+        App\Providers\CrawlerGhibliServiceProvider::class,
+
+        /**
+         * Service Providers para repositories
+         */
+        App\Providers\RepositoriesServiceProvider::class,
+
+        /**
+         * Return people Service Provider
+         */
+        App\Providers\ReturnPeopleServiceProvider::class,
     ],
 
     /*
@@ -225,6 +240,23 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /**
+         * Criando Facade para API Crawler Ghibli
+         */
+
+        'CrawlerGhibli' => App\Facades\CrawlerGhibli::class,
+
+        /**
+         * Criando Facade para Repositories
+         */
+        'CharacterRepository' => App\Facades\CharacterRepository::class,
+        'MovieRepository' => App\Facades\MovieRepository::class,
+
+        /**
+         * Criando Facade para ReturnPeople
+         */
+        'ReturnPeople' => App\Facades\ReturnPeople::class,
 
     ],
 

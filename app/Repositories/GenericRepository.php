@@ -13,20 +13,20 @@ abstract class GenericRepository {
     }
 
     public function create($data) {
-        if (isset($data)) {
+        if (!isset($data)) {
             return null;
         }
 
         return $this->model->create($data);
     }
 
-    public function findAll() {
-        return $this->model->all();
+    public function findAll($params = ['*']) {
+        return $this->model->all($params);
     }
 
     public function findById($id) {
 
-        if (isset($id)) {
+        if (!isset($id)) {
             return null;
         }
 
@@ -46,12 +46,4 @@ abstract class GenericRepository {
       return $data;
 
     }
-
-    public function update(Model $data) {
-
-        $data->save();
-
-        return $data->toArray();
-    }
-
 }
