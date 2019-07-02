@@ -20,6 +20,15 @@ abstract class GenericRepository {
         return $this->model->create($data);
     }
 
+    public function insert($data)
+    {
+        if (!isset($data)) {
+            return null;
+        }
+
+        return $this->model->insert($data);
+    }
+
     public function findAll($params = ['*']) {
         return $this->model->all($params);
     }

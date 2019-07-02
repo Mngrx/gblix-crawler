@@ -16,6 +16,11 @@ class Movie extends Model
 
     protected $primaryKey = 'id_api';
 
+    // Para fazer o Eloquent enteder que o 'id_api' é uma string
+    protected $casts = [
+        'id_api' => 'string'
+    ];
+
     public $timestamps = true;
 
     protected $fillable = [

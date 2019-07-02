@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\IMovieRepository;
 use App\Models\Movie;
+use App\Facades\MovieRepository as Repository;
+
 
 class MovieRepository extends GenericRepository implements IMovieRepository {
 
@@ -52,7 +54,7 @@ class MovieRepository extends GenericRepository implements IMovieRepository {
         }
 
         //Salvando os filmes que foram requisitados
-        Movie::insert($moviesToSave);
+        Repository::insert($moviesToSave);
     }
 
 }

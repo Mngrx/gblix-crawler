@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\ICharacterRepository;
 use App\Models\Character;
+use App\Facades\CharacterRepository as Repository;
 
 class CharacterRepository extends GenericRepository implements ICharacterRepository{
 
@@ -59,7 +60,7 @@ class CharacterRepository extends GenericRepository implements ICharacterReposit
             }
         }
         //Salvando as pessoas novas que foram requisitadas
-        Character::insert($charactersToSave);
+        Repository::insert($charactersToSave);
     }
 
     public function getDataWithParams($order, $sort, $filters) {
